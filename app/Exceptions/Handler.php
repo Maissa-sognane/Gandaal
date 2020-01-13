@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -29,8 +30,9 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param \Exception $exception
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -47,5 +49,30 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
+    }
+    /**
+     * Convert an authentication exception into a response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @return string
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        $guard = array($exception->guards());
+        switch ($guard) {
+            case 'admin':
+                $redirect = redirect()->guest(route('admin.login'));
+                break;
+            case 'responsable':
+                $redirect = redirect()->guest(route('responsable.login'));
+                break;    
+            default:
+                $redirect = redirect()->guest(route('accueil'));
+                break;
+        }
+        return $request->expectsJson()
+                    ? response()->json(['message' => $exception->getMessage()], 401)
+                    : $redirect ?? route('login');
     }
 }

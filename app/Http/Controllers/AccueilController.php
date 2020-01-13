@@ -13,7 +13,7 @@ class AccueilController extends Controller
     //public function index ($id)
     public function index ()
     {
-    	//return view("eleves.page_eleves", compact("id"));
-    	return view("eleves.page_eleves");
+    	//return view("eleve.page_eleves", compact("id"));
+    	return view("eleve.page_eleves");
     }
 }
