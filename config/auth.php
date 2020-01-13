@@ -40,6 +40,29 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+     'admin' => [
+         'driver' => 'session',
+         'provider' => 'admins',
+     ],
+
+     'responsable'=> [
+
+         'driver' => 'session',
+         'provider' => 'responsables',
+
+     ],
+
+     'etudiant'=> [
+
+         'driver' => 'session',
+         'provider' => 'etudiants',
+     ],
+
+     'professeur' => [
+
+         'driver' => 'session',
+         'provider' => 'professeurs',
+     ],
 
         'api' => [
             'driver' => 'token',
@@ -69,6 +92,26 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
+        ],
+
+        'responsables' => [
+            'driver' => 'eloquent',
+            'model' => App\responsable::class,
+        ],
+
+        'etudiants' => [
+            'driver' => 'eloquent',
+            'model' => App\eleve::class,
+        ],
+
+        'professeurs' => [
+            'driver' => 'eloquent',
+            'model' => App\professeur::class,
         ],
 
         // 'users' => [
